@@ -1,0 +1,1 @@
+# MyCache - A Memcached-like Go Cache
