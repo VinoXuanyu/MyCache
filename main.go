@@ -1,10 +1,25 @@
 package main
 
-import "container/list"
+import (
+	"fmt"
+	"sync"
+	"time"
+)
 
+var set = make(map[int]bool)
+var m sync.Mutex
+
+func printOnce(num int) {
+	m.Lock()
+	if _, exist := set[num]; !exist {
+		fmt.Println(num)
+	}
+	set[num] = true
+	m.Unlock()
+}
 func main() {
-	a := list.New()
-	a.PushFront(1)
-	b := a.Back().Value.(int)
-	print(b)
+	for i := 0; i < 100000; i++ {
+		go printOnce(100)
+	}
+	time.Sleep(time.Second)
 }
